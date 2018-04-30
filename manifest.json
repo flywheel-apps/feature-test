@@ -1,0 +1,22 @@
+{
+	"name": "feature-check",
+	"label": "Feature check",
+	"description": "Test basic gear environment functionality. Results are printed to the log.",
+	"version": "1",
+	"inputs": {},
+	"config": {},
+	"author": "Nathaniel Kofalt",
+	"maintainer": "Nathaniel Kofalt",
+	"command": "python script.py",
+	"license": "Apache-2.0",
+	"source": "",
+	"url": "",
+	"custom": {
+		"gear-builder": {
+			"image": "python:2-slim-jessie"
+		}
+	},
+	"capabilities": [
+		"networking"
+	]
+}

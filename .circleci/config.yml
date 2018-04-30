@@ -1,0 +1,39 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: "~/build"
+    environment:
+      CircleKey: '0666c825dbc3569957575f069ccbd878d1f57957'
+      FlywheelKey: 'dev.flywheel.io:hvqMb5zHZz8DoJLYoy'
+      PATH: '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:.'
+
+    machine:
+      enabled: true
+
+    steps:
+      - checkout
+
+      - run:
+          name: Get FW binary
+          command: .circleci/get-circle.py --token "$CircleKey" --repo 'github/flywheel-io/cli' --path 'build/linux_amd64/fw' --ex
+
+      - run:
+          name: Check dev site
+          command: fw login $FlywheelKey
+
+      - run:
+          name: Wait for docker
+          command: for i in {1..90}; do docker ps > /dev/null && break || sleep .1; done
+
+      - run:
+          name: Run gear
+          command: fw gear run
+
+      - run:
+          name: Remove output folder
+          command: sudo rm -rf ./output
+
+      - run:
+          name: Upload gear
+          command: fw gear upload
