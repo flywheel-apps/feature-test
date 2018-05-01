@@ -35,5 +35,9 @@ jobs:
           command: sudo rm -rf ./output
 
       - run:
+          name: Add flywheel SDK
+          command: sudo pip install flywheel-sdk==2.2.0rc1
+
+      - run:
           name: Upload gear
-          command: fw gear upload
+          command: .circleci/push-gear.py
